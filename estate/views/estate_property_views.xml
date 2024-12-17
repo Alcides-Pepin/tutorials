@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Déclaration de l'action "estate_property_action" liée au modèle "estate_property" -->
     <record id="estate_property_action" model="ir.actions.act_window">
-        <field name="name">Test action</field>
+        <field name="name">Properties</field>
         <field name="res_model">estate_property</field>
         <field name="view_mode">list,form</field>
     </record>
