@@ -10,7 +10,7 @@
     'author': 'Pépin, Alcides DE OLIVEIRA GUERRA',
     'depends': ['base'],
     'data': [
-        "estate/views/estate_property_views.xml"
+        "views/estate_property_views.xml"
     ],
     'installable': True,
     'application': True,
