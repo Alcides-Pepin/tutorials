@@ -3,7 +3,7 @@ from odoo.tools import date_utils
 
 
 class EstateProperty(models.Model):
-    _name = "estate_property"
+    _name = "estate.property"
     _description = "Estate Property model"
 
     name = fields.Char(required=True)
@@ -25,9 +25,23 @@ class EstateProperty(models.Model):
     garden = fields.Boolean()
     garden_area = fields.Integer()
     garden_orientation = fields.Selection(
-        string='Type',
+        string='Garden Orientation',
         selection=[('north', 'North'),
                    ('south', 'South'),
                    ('east', 'East'),
                    ('west', 'West')]
+        )
+    active = fields.Boolean(default=True)
+    state = fields.Selection(
+        string='Status',
+        selection=[
+                ('new', 'New'),
+                ('offer_received', 'Offer Received'),
+                ('offer_accepted', 'Offer Accepted'),
+                ('sold', 'Sold'),
+                ('cancelled', 'Cancelled')
+            ],
+        required=True,
+        copy=False,
+        default='new'
         )
