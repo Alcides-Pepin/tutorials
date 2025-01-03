@@ -1,0 +1,1 @@
+../odoo/odoo-bin --addons-path="../odoo/addons/,../tutorials" -d odoo_local -r Alcides -w postgres --dev xml -u estate
