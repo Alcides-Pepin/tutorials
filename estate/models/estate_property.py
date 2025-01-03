@@ -1,6 +1,8 @@
 from odoo import fields, models, api
 from odoo.tools import date_utils
 from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError
+from odoo.tools import float_utils
 
 
 class EstateProperty(models.Model):
@@ -111,3 +113,19 @@ class EstateProperty(models.Model):
                 raise UserError(("You cannot define a sold property as cancelled."))
             else:
                 record.state = 'cancelled'
+
+    @api.onchange('offer_ids')
+    def _onchange_offer_ids(self):
+        for record in self:
+            if record.state == "new" and record.offer_ids:  # Vérifie si offer_ids n'est pas vide
+                record.state = "offer_received"
+            elif not record.offer_ids:  # Vérifie si offer_ids est vide
+                record.state = "new"
+
+    @api.constrains('selling_price')
+    def _check_selling_price(self):
+        for record in self:
+            minimum_limit = 0.9 * record.expected_price
+            status = float_utils.float_compare(record.selling_price, minimum_limit, precision_digits=2, precision_rounding=None) 
+            if status == -1:
+                raise ValidationError("The selling price cannot be inferior to 90% of the expected price.")

@@ -66,6 +66,7 @@ class EstatePropertyOffer(models.Model):
             raise UserError(("Another offer has already been accepted."))
         else:
             self.status = 'accepted'
+            self.property_id.state = 'offer_accepted'
             self.property_id.selling_price = self.price
             self.property_id.buyer_id = self.partner_id
 
