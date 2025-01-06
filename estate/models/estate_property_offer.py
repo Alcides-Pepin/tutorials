@@ -38,6 +38,13 @@ class EstatePropertyOffer(models.Model):
         compute='_compute_date_deadline',
         inverse='_inverse_date_deadline',
         )
+    
+    property_type_id = fields.Many2one(
+        string='Type',
+        comodel_name='estate.property.type',
+        related="property_id.property_type_id",
+        store=True
+    )
 
     _sql_constraints = [
         ('check_price', 'CHECK(price > 0)',
