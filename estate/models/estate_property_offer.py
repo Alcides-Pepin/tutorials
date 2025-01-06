@@ -73,5 +73,4 @@ class EstatePropertyOffer(models.Model):
 
     def action_refuse_offer(self):
         self.status = 'refused'
-        self.property_id.selling_price = False
         self.property_id.buyer_id = False
