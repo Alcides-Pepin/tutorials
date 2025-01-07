@@ -1,8 +1,8 @@
 from odoo import fields, models, api
 from odoo.tools import date_utils
+from odoo.tools import float_utils
 from odoo.exceptions import UserError
 from odoo.exceptions import ValidationError
-from odoo.tools import float_utils
 
 
 class EstateProperty(models.Model):
