@@ -115,14 +115,6 @@ class EstateProperty(models.Model):
             else:
                 record.state = 'cancelled'
 
-    @api.onchange('offer_ids')
-    def _onchange_offer_ids(self):
-        for record in self:
-            if record.state == "new" and record.offer_ids:  # Vérifie si offer_ids n'est pas vide
-                record.state = "offer_received"
-            elif not record.offer_ids:  # Vérifie si offer_ids est vide
-                record.state = "new"
-
     @api.constrains('selling_price')
     def _check_selling_price(self):
         for record in self:
@@ -130,3 +122,9 @@ class EstateProperty(models.Model):
             status = float_utils.float_compare(record.selling_price, minimum_limit, precision_digits=2, precision_rounding=None) 
             if status == -1:
                 raise ValidationError("The selling price cannot be inferior to 90% of the expected price.")
+            
+    @api.ondelete(at_uninstall=False)
+    def _unlink_property(self):
+        for record in self:
+            if record.state not in ('new', 'cancelled'):
+                raise ValidationError("A property can only be deleted if cancelled or new.")
